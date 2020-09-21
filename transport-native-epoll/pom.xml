@@ -193,10 +193,10 @@
                       <env key="LIB_NAME" value="${nativeLibName}" />
                     </exec>
                     <copy todir="${staticLibsDir}">
-                      <zipfileset src="${nativeLibOnlyDir}" />
+                      <fileset dir="${nativeLibOnlyDir}" />
                     </copy>
                     <copy todir="${staticLibsDir}">
-                      <zipfileset src="${unix.common.lib.dir}" />
+                      <fileset dir="${unix.common.lib.unpacked.dir}" />
                     </copy>
                   </target>
                 </configuration>
