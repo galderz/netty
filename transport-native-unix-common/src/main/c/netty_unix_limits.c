@@ -49,6 +49,10 @@ static jint netty_unix_limits_sizeOfjlong(JNIEnv* env, jclass clazz) {
     return sizeof(jlong);
 }
 
+jint io_netty_unix_limits_udsSunPathSize(JNIEnv* env, jclass clazz) {
+    return netty_unix_limits_udsSunPathSize(env, clazz);
+}
+
 static jint netty_unix_limits_udsSunPathSize(JNIEnv* env, jclass clazz) {
     struct sockaddr_un udsAddr;
     return sizeof(udsAddr.sun_path) / sizeof(udsAddr.sun_path[0]);
