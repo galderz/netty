@@ -38,6 +38,12 @@
     <jni.compiler.args.ldflags>LDFLAGS=-L${unix.common.lib.unpacked.dir} -Wl,--no-as-needed -lrt -Wl,--whole-archive -l${unix.common.lib.name} -Wl,--no-whole-archive</jni.compiler.args.ldflags>
     <nativeSourceDirectory>${project.basedir}/src/main/c</nativeSourceDirectory>
     <skipTests>true</skipTests>
+
+    <exe.make>make</exe.make>
+    <exe.archiver>ar</exe.archiver>
+    <nativeLibName>libnetty-epoll</nativeLibName>
+    <nativeObjsOnlyDir>${project.build.directory}/native-build/src/.libs</nativeObjsOnlyDir>
+    <nativeLibOnlyDir>${project.build.directory}/native-lib-only</nativeLibOnlyDir>
   </properties>
 
   <profiles>
@@ -164,6 +170,29 @@
                   <goal>generate</goal>
                   <goal>build</goal>
                 </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <!-- invoke the make file to build a static library -->
+              <execution>
+                <id>build-native-lib</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <exec executable="${exe.make}" failonerror="true" resolveexecutable="true">
+                      <env key="AR" value="${exe.archiver}" />
+                      <env key="LIB_DIR" value="${nativeLibOnlyDir}" />
+                      <env key="OBJ_DIR" value="${nativeObjsOnlyDir}" />
+                      <env key="LIB_NAME" value="${nativeLibName}" />
+                    </exec>
+                  </target>
+                </configuration>
               </execution>
             </executions>
           </plugin>
