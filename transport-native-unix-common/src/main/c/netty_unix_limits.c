@@ -81,6 +81,6 @@ jint netty_unix_limits_JNI_OnLoad(JNIEnv* env, const char* packagePrefix) {
 
 void netty_unix_limits_JNI_OnUnLoad(JNIEnv* env) { }
 
-jint io_netty_unix_limits_udsSunPathSize(JNIEnv* env, jclass clazz) {
+JNIEXPORT jint io_netty_unix_limits_udsSunPathSize(JNIEnv* env, jclass clazz) {
     return netty_unix_limits_udsSunPathSize(env, clazz);
 }
