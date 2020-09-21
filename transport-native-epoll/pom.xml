@@ -44,6 +44,7 @@
     <nativeLibName>libnetty-epoll</nativeLibName>
     <nativeObjsOnlyDir>${project.build.directory}/native-build/src/.libs</nativeObjsOnlyDir>
     <nativeLibOnlyDir>${project.build.directory}/native-lib-only</nativeLibOnlyDir>
+    <staticLibsDir>${project.build.directory}/static-libs</staticLibsDir>
   </properties>
 
   <profiles>
@@ -179,7 +180,7 @@
               <!-- invoke the make file to build a static library -->
               <execution>
                 <id>build-native-lib</id>
-                <phase>generate-sources</phase>
+                <phase>package</phase>
                 <goals>
                   <goal>run</goal>
                 </goals>
@@ -191,6 +192,12 @@
                       <env key="OBJ_DIR" value="${nativeObjsOnlyDir}" />
                       <env key="LIB_NAME" value="${nativeLibName}" />
                     </exec>
+                    <copy todir="${staticLibsDir}">
+                      <zipfileset src="${nativeLibOnlyDir}" />
+                    </copy>
+                    <copy todir="${staticLibsDir}">
+                      <zipfileset src="${unix.common.lib.dir}" />
+                    </copy>
                   </target>
                 </configuration>
               </execution>
