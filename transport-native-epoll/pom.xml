@@ -38,6 +38,17 @@
     <jni.compiler.args.ldflags>LDFLAGS=-L${unix.common.lib.unpacked.dir} -Wl,--no-as-needed -lrt -Wl,--whole-archive -l${unix.common.lib.name} -Wl,--no-whole-archive</jni.compiler.args.ldflags>
     <nativeSourceDirectory>${project.basedir}/src/main/c</nativeSourceDirectory>
     <skipTests>true</skipTests>
+
+    <exe.make>make</exe.make>
+    <exe.compiler>gcc</exe.compiler>
+    <exe.archiver>ar</exe.archiver>
+    <nativeLibName>libnetty-epoll</nativeLibName>
+    <nativeIncludeDir>${project.basedir}/src/main/c</nativeIncludeDir>
+    <nativeJarWorkdir>${project.build.directory}/native-jar-work</nativeJarWorkdir>
+    <nativeObjsOnlyDir>${project.build.directory}/native-objs-only</nativeObjsOnlyDir>
+    <nativeLibOnlyDir>${project.build.directory}/native-lib-only</nativeLibOnlyDir>
+    <defaultJarFile>${project.build.directory}/${project.build.finalName}.jar</defaultJarFile>
+    <nativeJarFile>${project.build.directory}/${project.build.finalName}-${jni.classifier}.jar</nativeJarFile>
   </properties>
 
   <profiles>
@@ -189,6 +200,58 @@
                     <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
                   </archive>
                   <classifier>${jni.classifier}</classifier>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <!-- Build the additional JAR that contains the native library. -->
+              <execution>
+                <id>native-jar</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <copy todir="${nativeJarWorkdir}">
+                      <zipfileset src="${defaultJarFile}" />
+                    </copy>
+                    <copy todir="${nativeJarWorkdir}" includeEmptyDirs="false">
+                      <zipfileset dir="${nativeLibOnlyDir}" />
+                      <regexpmapper handledirsep="yes" from="^(?:[^/]+/)*([^/]+)$" to="META-INF/native/lib/\1" />
+                    </copy>
+                    <copy todir="${nativeJarWorkdir}" includeEmptyDirs="false">
+                      <zipfileset dir="${nativeIncludeDir}" />
+                      <regexpmapper handledirsep="yes" from="^(?:[^/]+/)*([^/]+).h$" to="META-INF/native/include/\1.h" />
+                    </copy>
+                    <jar destfile="${nativeJarFile}" manifest="${nativeJarWorkdir}/META-INF/MANIFEST.MF" basedir="${nativeJarWorkdir}" index="true" excludes="META-INF/MANIFEST.MF,META-INF/INDEX.LIST" />
+                    <attachartifact file="${nativeJarFile}" classifier="${jni.classifier}" type="jar" />
+                  </target>
+                </configuration>
+              </execution>
+              <!-- invoke the make file to build a static library -->
+              <execution>
+                <id>build-native-lib</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <exec executable="${exe.make}" failonerror="true" resolveexecutable="true">
+                      <env key="CC" value="${exe.compiler}" />
+                      <env key="AR" value="${exe.archiver}" />
+                      <env key="LIB_DIR" value="${nativeLibOnlyDir}" />
+                      <env key="OBJ_DIR" value="${nativeObjsOnlyDir}" />
+                      <env key="JNI_PLATFORM" value="${jni.platform}" />
+                      <env key="CFLAGS" value="-O3 -Werror -Wno-attributes -fPIC -fno-omit-frame-pointer -Wunused-variable -fvisibility=hidden" />
+                      <env key="LDFLAGS" value="-Wl,--no-as-needed -lrt" />
+                      <env key="LIB_NAME" value="${nativeLibName}" />
+                    </exec>
+                  </target>
                 </configuration>
               </execution>
             </executions>
