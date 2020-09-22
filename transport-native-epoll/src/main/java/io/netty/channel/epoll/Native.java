@@ -50,6 +50,7 @@ public final class Native {
     private static final InternalLogger logger = InternalLoggerFactory.getInstance(Native.class);
 
     static {
+        System.out.println("Native.<clinit> begin");
         Selector selector = null;
         try {
             // We call Selector.open() as this will under the hood cause IOUtil to be loaded.
@@ -77,6 +78,7 @@ public final class Native {
             }
         }
         Socket.initialize();
+        System.out.println("Native.<clinit> end");
     }
 
     // EventLoop operations and constants
