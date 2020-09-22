@@ -36,4 +36,6 @@ void netty_unix_socket_getOptionHandleError(JNIEnv* env, int err);
 jint netty_unix_socket_JNI_OnLoad(JNIEnv* env, const char* packagePrefix);
 void netty_unix_socket_JNI_OnUnLoad(JNIEnv* env);
 
+void io_netty_unix_socket_initialize(JNIEnv* env, jclass clazz, jboolean ipv4Preferred)
+
 #endif /* NETTY_UNIX_SOCKET_H_ */

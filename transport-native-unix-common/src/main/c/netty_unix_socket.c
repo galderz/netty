@@ -1103,3 +1103,7 @@ void netty_unix_socket_JNI_OnUnLoad(JNIEnv* env) {
     NETTY_UNLOAD_CLASS(env, datagramSocketAddressClass);
     NETTY_UNLOAD_CLASS(env, inetSocketAddressClass);
 }
+
+JNIEXPORT void io_netty_unix_socket_initialize(JNIEnv* env, jclass clazz, jboolean ipv4Preferred) {
+    return netty_unix_socket_initialize(env, clazz, ipv4Preferred);
+}
