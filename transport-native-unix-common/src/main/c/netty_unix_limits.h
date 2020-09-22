@@ -22,6 +22,4 @@
 jint netty_unix_limits_JNI_OnLoad(JNIEnv* env, const char* packagePrefix);
 void netty_unix_limits_JNI_OnUnLoad(JNIEnv* env);
 
-jint io_netty_unix_limits_udsSunPathSize(JNIEnv* env, jclass clazz);
-
 #endif /* NETTY_UNIX_LIMITS_H_ */
