@@ -788,6 +788,30 @@ JNIEXPORT jint io_netty_epoll_native_epollrdhup(JNIEnv* env, jclass clazz) {
     return netty_epoll_native_epollrdhup(env, clazz);
 }
 
+JNIEXPORT jint io_netty_epoll_native_epollet(JNIEnv* env, jclass clazz) {
+    return netty_epoll_native_epollet(env, clazz);
+}
+
+JNIEXPORT jint io_netty_epoll_native_epollerr(JNIEnv* env, jclass clazz) {
+    return netty_epoll_native_epollerr(env, clazz);
+}
+
+JNIEXPORT jint io_netty_epoll_native_tcpMd5SigMaxKeyLen(JNIEnv* env, jclass clazz) {
+    return netty_epoll_native_tcpMd5SigMaxKeyLen(env, clazz);
+}
+
+JNIEXPORT jboolean io_netty_epoll_native_isSupportingSendmmsg(JNIEnv* env, jclass clazz) {
+    return netty_epoll_native_isSupportingSendmmsg(env, clazz);
+}
+
+JNIEXPORT jboolean io_netty_epoll_native_isSupportingRecvmmsg(JNIEnv* env, jclass clazz) {
+    return netty_epoll_native_isSupportingRecvmmsg(env, clazz);
+}
+
+JNIEXPORT jboolean io_netty_epoll_native_isSupportingTcpFastopen(JNIEnv* env, jclass clazz) {
+    return netty_epoll_native_isSupportingTcpFastopen(env, clazz);
+}
+
 JNIEXPORT jstring io_netty_epoll_native_kernelVersion(JNIEnv* env, jclass clazz) {
     return netty_epoll_native_kernelVersion(env, clazz);
 }
