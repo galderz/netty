@@ -784,6 +784,10 @@ JNIEXPORT jint io_netty_epoll_native_epollout(JNIEnv* env, jclass clazz) {
     return netty_epoll_native_epollout(env, clazz);
 }
 
+JNIEXPORT jint io_netty_epoll_native_epollrdhup(JNIEnv* env, jclass clazz) {
+    return netty_epoll_native_epollrdhup(env, clazz);
+}
+
 JNIEXPORT jstring io_netty_epoll_native_kernelVersion(JNIEnv* env, jclass clazz) {
     return netty_epoll_native_kernelVersion(env, clazz);
 }
