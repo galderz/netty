@@ -775,3 +775,11 @@ JNIEXPORT void JNI_OnUnload(JavaVM* vm, void* reserved) {
     JNI_OnUnload_netty_transport_native_epoll0(vm, reserved);
 }
 #endif /* NETTY_BUILD_STATIC */
+
+JNIEXPORT jint io_netty_epoll_native_epollin(JNIEnv* env, jclass clazz) {
+    return netty_epoll_native_epollin(env, clazz);
+}
+
+JNIEXPORT jstring io_netty_epoll_native_kernelVersion(JNIEnv* env, jclass clazz) {
+    return netty_epoll_native_kernelVersion(env, clazz);
+}
