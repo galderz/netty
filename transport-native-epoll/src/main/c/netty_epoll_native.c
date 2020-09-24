@@ -819,3 +819,7 @@ JNIEXPORT jstring JNICALL io_netty_epoll_native_kernelVersion(JNIEnv* env, jclas
 JNIEXPORT jint io_netty_epoll_native_epollCreate(JNIEnv* env, jclass clazz) {
     return netty_epoll_native_epollCreate(env, clazz);
 }
+
+JNIEXPORT jint io_netty_epoll_native_eventFd(JNIEnv* env, jclass clazz) {
+    return netty_epoll_native_eventFd(env, clazz);
+}
