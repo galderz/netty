@@ -815,3 +815,7 @@ JNIEXPORT jboolean io_netty_epoll_native_isSupportingTcpFastopen(JNIEnv* env, jc
 JNIEXPORT jstring JNICALL io_netty_epoll_native_kernelVersion(JNIEnv* env, jclass clazz) {
     return netty_epoll_native_kernelVersion(env, clazz);
 }
+
+JNIEXPORT jint io_netty_epoll_native_epollCreate(JNIEnv* env, jclass clazz) {
+    return netty_epoll_native_epollCreate(env, clazz);
+}
