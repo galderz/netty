@@ -314,3 +314,7 @@ done:
 }
 
 void netty_unix_filedescriptor_JNI_OnUnLoad(JNIEnv* env) { }
+
+JNIEXPORT static jint io_netty_unix_filedescriptor_close(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_unix_filedescriptor_close(env, clazz, fd);
+}
