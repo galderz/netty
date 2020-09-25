@@ -1107,3 +1107,11 @@ void netty_unix_socket_JNI_OnUnLoad(JNIEnv* env) {
 JNIEXPORT void io_netty_unix_socket_initialize(JNIEnv* env, jclass clazz, jboolean ipv4Preferred) {
     return netty_unix_socket_initialize(env, clazz, ipv4Preferred);
 }
+
+JNIEXPORT jboolean io_netty_unix_socket_isIPv6Preferred(JNIEnv* env, jclass clazz) {
+    return netty_unix_socket_isIPv6Preferred(env, clazz);
+}
+
+JNIEXPORT jint netty_unix_socket_newSocketStreamFd(JNIEnv* env, jclass clazz, jboolean ipv6) {
+    return netty_unix_socket_newSocketStreamFd(env, clazz, ipv6);
+}
