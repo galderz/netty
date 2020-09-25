@@ -1123,3 +1123,7 @@ JNIEXPORT jboolean io_netty_unix_socket_isIPv6(JNIEnv* env, jclass clazz, jint f
 JNIEXPORT void io_netty_unix_socket_setReuseAddress(JNIEnv* env, jclass clazz, jint fd, jint optval) {
     netty_unix_socket_setReuseAddress(env, clazz, fd, optval);
 }
+
+JNIEXPORT jint io_netty_unix_socket_bind(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6, jbyteArray address, jint scopeId, jint port) {
+    return netty_unix_socket_bind(env, clazz, fd, ipv6, address, scope, port);
+}
