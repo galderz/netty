@@ -839,3 +839,11 @@ JNIEXPORT jint io_netty_epoll_native_epollCtlAdd0(JNIEnv* env, jclass clazz, jin
 JNIEXPORT jint io_netty_epoll_native_timerFd(JNIEnv* env, jclass clazz) {
     return netty_epoll_native_timerFd(env, clazz);
 }
+
+JNIEXPORT jint io_netty_epoll_native_epollWait(JNIEnv* env, jclass clazz, jint efd, jlong address, jint len, jint timeout) {
+    return netty_epoll_native_epollWait(env, clazz, efd, address, len, timeout);
+}
+
+JNIEXPORT jint io_netty_epoll_native_epollBusyWait0(JNIEnv* env, jclass clazz, jint efd, jlong address, jint len) {
+    return netty_epoll_native_epollBusyWait0(env, clazz, efd, address, len);
+}
