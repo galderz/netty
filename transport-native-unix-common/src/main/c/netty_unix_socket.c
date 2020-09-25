@@ -1135,3 +1135,11 @@ JNIEXPORT jbyteArray io_netty_unix_socket_localAddress(JNIEnv* env, jclass clazz
 JNIEXPORT jint io_netty_unix_socket_listen(JNIEnv* env, jclass clazz, jint fd, jint backlog) {
     return netty_unix_socket_listen(env, clazz, fd, backlog);
 }
+
+JNIEXPORT void io_netty_unix_socket_setTcpNoDelay(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_unix_socket_setTcpNoDelay(env, clazz, fd, optval);
+}
+
+JNIEXPORT jint io_netty_unix_socket_getSendBufferSize(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_unix_socket_getSendBufferSize(env, clazz, fd);
+}
