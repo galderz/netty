@@ -823,3 +823,11 @@ JNIEXPORT jint io_netty_epoll_native_epollCreate(JNIEnv* env, jclass clazz) {
 JNIEXPORT jint io_netty_epoll_native_eventFd(JNIEnv* env, jclass clazz) {
     return netty_epoll_native_eventFd(env, clazz);
 }
+
+JNIEXPORT jint io_netty_epoll_native_sizeofEpollEvent(JNIEnv* env, jclass clazz) {
+    return netty_epoll_native_sizeofEpollEvent(env, clazz);
+}
+
+JNIEXPORT jint io_netty_epoll_native_offsetofEpollData(JNIEnv* env, jclass clazz) {
+    return netty_epoll_native_offsetofEpollData(env, clazz);
+}
