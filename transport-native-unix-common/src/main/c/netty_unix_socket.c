@@ -1131,3 +1131,7 @@ JNIEXPORT jint io_netty_unix_socket_bind(JNIEnv* env, jclass clazz, jint fd, jbo
 JNIEXPORT jbyteArray io_netty_unix_socket_localAddress(JNIEnv* env, jclass clazz, jint fd) {
     return netty_unix_socket_localAddress(env, clazz, fd);
 }
+
+JNIEXPORT jint io_netty_unix_socket_listen(JNIEnv* env, jclass clazz, jint fd, jint backlog) {
+    return netty_unix_socket_listen(env, clazz, fd, backlog);
+}
