@@ -835,3 +835,7 @@ JNIEXPORT jint io_netty_epoll_native_offsetofEpollData(JNIEnv* env, jclass clazz
 JNIEXPORT jint io_netty_epoll_native_epollCtlAdd0(JNIEnv* env, jclass clazz, jint efd, jint fd, jint flags) {
     return netty_epoll_native_epollCtlAdd0(env, clazz, efd, fd, flags);
 }
+
+JNIEXPORT jint io_netty_epoll_native_timerFd(JNIEnv* env, jclass clazz) {
+    return netty_epoll_native_timerFd(env, clazz);
+}
