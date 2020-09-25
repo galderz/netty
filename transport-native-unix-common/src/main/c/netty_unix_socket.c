@@ -1115,3 +1115,7 @@ JNIEXPORT jboolean io_netty_unix_socket_isIPv6Preferred(JNIEnv* env, jclass claz
 JNIEXPORT jint io_netty_unix_socket_newSocketStreamFd(JNIEnv* env, jclass clazz, jboolean ipv6) {
     return netty_unix_socket_newSocketStreamFd(env, clazz, ipv6);
 }
+
+JNIEXPORT jboolean io_netty_unix_socket_isIPv6(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_unix_socket_isIPv6(env, clazz, fd);
+}
