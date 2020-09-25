@@ -1119,3 +1119,7 @@ JNIEXPORT jint io_netty_unix_socket_newSocketStreamFd(JNIEnv* env, jclass clazz,
 JNIEXPORT jboolean io_netty_unix_socket_isIPv6(JNIEnv* env, jclass clazz, jint fd) {
     return netty_unix_socket_isIPv6(env, clazz, fd);
 }
+
+JNIEXPORT void io_netty_unix_socket_setReuseAddress(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_unix_socket_setReuseAddress(env, clazz, fd, optval);
+}
