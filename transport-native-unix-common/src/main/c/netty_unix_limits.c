@@ -84,3 +84,19 @@ void netty_unix_limits_JNI_OnUnLoad(JNIEnv* env) { }
 JNIEXPORT jint io_netty_unix_limits_udsSunPathSize(JNIEnv* env, jclass clazz) {
     return netty_unix_limits_udsSunPathSize(env, clazz);
 }
+
+JNIEXPORT jint io_netty_unix_limits_iovMax(JNIEnv* env, jclass clazz) {
+    return netty_unix_limits_iovMax(env, clazz);
+}
+
+JNIEXPORT jint io_netty_unix_limits_uioMaxIov(JNIEnv* env, jclass clazz) {
+    return netty_unix_limits_uioMaxIov(env, clazz);
+}
+
+JNIEXPORT jlong io_netty_unix_limits_ssizeMax(JNIEnv* env, jclass clazz) {
+    return netty_unix_limits_ssizeMax(env, clazz);
+}
+
+JNIEXPORT jint io_netty_unix_limits_sizeOfjlong(JNIEnv* env, jclass clazz) {
+    return netty_unix_limits_sizeOfjlong(env, clazz);
+}
