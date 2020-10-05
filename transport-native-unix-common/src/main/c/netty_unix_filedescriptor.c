@@ -326,3 +326,7 @@ JNIEXPORT jint io_netty_unix_filedescriptor_readAddress(JNIEnv* env, jclass claz
 JNIEXPORT jint io_netty_unix_filedescriptor_writeAddress(JNIEnv* env, jclass clazz, jint fd, jlong address, jint pos, jint limit) {
     return netty_unix_filedescriptor_writeAddress(env, clazz, fd, address, pos, limit);
 }
+
+JNIEXPORT jlong io_netty_unix_filedescriptor_writevAddresses(JNIEnv* env, jclass clazz, jint fd, jlong memoryAddress, jint length) {
+    return netty_unix_filedescriptor_writevAddresses(env, clazz, fd, memoryAddress, length);
+}
