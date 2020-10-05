@@ -1143,3 +1143,27 @@ JNIEXPORT void io_netty_unix_socket_setTcpNoDelay(JNIEnv* env, jclass clazz, jin
 JNIEXPORT jint io_netty_unix_socket_getSendBufferSize(JNIEnv* env, jclass clazz, jint fd) {
     return netty_unix_socket_getSendBufferSize(env, clazz, fd);
 }
+
+JNIEXPORT jint io_netty_unix_socket_connect(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6, jbyteArray address, jint scopeId, jint port) {
+    return netty_unix_socket_connect(env, clazz, fd, ipv6, address, scopeId, port);
+}
+
+JNIEXPORT jint io_netty_unix_socket_accept(JNIEnv* env, jclass clazz, jint fd, jbyteArray acceptedAddress) {
+    return netty_unix_socket_accept(env, clazz, fd, acceptedAddress);
+}
+
+JNIEXPORT jint io_netty_unix_socket_finishConnect(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_unix_socket_finishConnect(env, clazz, fd);
+}
+
+JNIEXPORT jbyteArray io_netty_unix_socket_remoteAddress(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_unix_socket_remoteAddress(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_unix_socket_getSoLinger(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_unix_socket_getSoLinger(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_unix_socket_shutdown(JNIEnv* env, jclass clazz, jint fd, jboolean read, jboolean write) {
+    return netty_unix_socket_shutdown(env, clazz, fd, read, write);
+}

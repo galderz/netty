@@ -250,3 +250,55 @@ void netty_unix_errors_JNI_OnUnLoad(JNIEnv* env) {
     NETTY_UNLOAD_CLASS(env, portUnreachableExceptionClass);
     NETTY_UNLOAD_CLASS(env, closedChannelExceptionClass);
 }
+
+JNIEXPORT jint io_netty_unix_errors_errnoENOENT(JNIEnv* env, jclass clazz) {
+    return netty_unix_errors_errnoENOENT(env, clazz);
+}
+
+JNIEXPORT jint io_netty_unix_errors_errnoENOTCONN(JNIEnv* env, jclass clazz) {
+    return netty_unix_errors_errnoENOTCONN(env, clazz);
+}
+
+JNIEXPORT jint io_netty_unix_errors_errnoEBADF(JNIEnv* env, jclass clazz) {
+    return netty_unix_errors_errnoEBADF(env, clazz);
+}
+
+JNIEXPORT jint io_netty_unix_errors_errnoEPIPE(JNIEnv* env, jclass clazz) {
+    return netty_unix_errors_errnoEPIPE(env, clazz);
+}
+
+JNIEXPORT jint io_netty_unix_errors_errnoECONNRESET(JNIEnv* env, jclass clazz) {
+    return netty_unix_errors_errnoECONNRESET(env, clazz);
+}
+
+JNIEXPORT jint io_netty_unix_errors_errnoEAGAIN(JNIEnv* env, jclass clazz) {
+    return netty_unix_errors_errnoEAGAIN(env, clazz);
+}
+
+JNIEXPORT jint io_netty_unix_errors_errnoEWOULDBLOCK(JNIEnv* env, jclass clazz) {
+    return netty_unix_errors_errnoEWOULDBLOCK(env, clazz);
+}
+
+JNIEXPORT jint io_netty_unix_errors_errnoEINPROGRESS(JNIEnv* env, jclass clazz) {
+    return netty_unix_errors_errnoEINPROGRESS(env, clazz);
+}
+
+JNIEXPORT jint io_netty_unix_errors_errorECONNREFUSED(JNIEnv* env, jclass clazz) {
+    return netty_unix_errors_errorECONNREFUSED(env, clazz);
+}
+
+JNIEXPORT jint io_netty_unix_errors_errorEISCONN(JNIEnv* env, jclass clazz) {
+    return netty_unix_errors_errorEISCONN(env, clazz);
+}
+
+JNIEXPORT jint io_netty_unix_errors_errorEALREADY(JNIEnv* env, jclass clazz) {
+    return netty_unix_errors_errorEALREADY(env, clazz);
+}
+
+JNIEXPORT jint io_netty_unix_errors_errorENETUNREACH(JNIEnv* env, jclass clazz) {
+    return netty_unix_errors_errorENETUNREACH(env, clazz);
+}
+
+JNIEXPORT jstring io_netty_unix_errors_strError(JNIEnv* env, jclass clazz, jint error) {
+    return netty_unix_errors_strError(env, clazz, error);
+}

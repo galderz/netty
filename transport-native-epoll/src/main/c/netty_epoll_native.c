@@ -844,10 +844,22 @@ JNIEXPORT jint io_netty_epoll_native_epollWait(JNIEnv* env, jclass clazz, jint e
     return netty_epoll_native_epollWait(env, clazz, efd, address, len, timeout);
 }
 
+JNIEXPORT jint io_netty_epoll_native_epollWait0(JNIEnv* env, jclass clazz, jint efd, jlong address, jint len, jint timerFd, jint tvSec, jint tvNsec) {
+    return netty_epoll_native_epollWait0(env, clazz, efd, address, len, timerFd, tvSec, tvNsec);
+}
+
 JNIEXPORT jint io_netty_epoll_native_epollBusyWait0(JNIEnv* env, jclass clazz, jint efd, jlong address, jint len) {
     return netty_epoll_native_epollBusyWait0(env, clazz, efd, address, len);
 }
 
 JNIEXPORT jint io_netty_epoll_native_epollCtlMod0(JNIEnv* env, jclass clazz, jint efd, jint fd, jint flags) {
     return netty_epoll_native_epollCtlMod0(env, clazz, efd, fd, flags);
+}
+
+JNIEXPORT jint io_netty_epoll_native_epollCtlDel0(JNIEnv* env, jclass clazz, jint efd, jint fd) {
+    return netty_epoll_native_epollCtlDel0(env, clazz, efd, fd);
+}
+
+JNIEXPORT void io_netty_epoll_native_eventFdWrite(JNIEnv* env, jclass clazz, jint fd, jlong value) {
+    return netty_epoll_native_eventFdWrite(env, clazz, fd, value);
 }

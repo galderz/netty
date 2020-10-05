@@ -318,3 +318,11 @@ void netty_unix_filedescriptor_JNI_OnUnLoad(JNIEnv* env) { }
 JNIEXPORT jint io_netty_unix_filedescriptor_close(JNIEnv* env, jclass clazz, jint fd) {
     return netty_unix_filedescriptor_close(env, clazz, fd);
 }
+
+JNIEXPORT jint io_netty_unix_filedescriptor_readAddress(JNIEnv* env, jclass clazz, jint fd, jlong address, jint pos, jint limit) {
+    return netty_unix_filedescriptor_readAddress(env, clazz, fd, address, pos, limit);
+}
+
+JNIEXPORT jint io_netty_unix_filedescriptor_writeAddress(JNIEnv* env, jclass clazz, jint fd, jlong address, jint pos, jint limit) {
+    return netty_unix_filedescriptor_writeAddress(env, clazz, fd, address, pos, limit);
+}
