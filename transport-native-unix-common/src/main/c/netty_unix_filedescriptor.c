@@ -113,7 +113,6 @@ static jint netty_unix_filedescriptor_writeAddress(JNIEnv* env, jclass clazz, ji
     return _write(env, clazz, fd, (void*) (intptr_t) address, pos, limit);
 }
 
-
 static jlong netty_unix_filedescriptor_writevAddresses(JNIEnv* env, jclass clazz, jint fd, jlong memoryAddress, jint length) {
     struct iovec* iov = (struct iovec*) (intptr_t) memoryAddress;
     return _writev(env, clazz, fd, iov, length);
@@ -315,18 +314,38 @@ done:
 
 void netty_unix_filedescriptor_JNI_OnUnLoad(JNIEnv* env) { }
 
+JNIEXPORT jint io_netty_unix_filedescriptor_open(JNIEnv* env, jclass clazz, jstring path) {
+    return netty_unix_filedescriptor_open(env, clazz, path);
+}
+
 JNIEXPORT jint io_netty_unix_filedescriptor_close(JNIEnv* env, jclass clazz, jint fd) {
     return netty_unix_filedescriptor_close(env, clazz, fd);
 }
 
-JNIEXPORT jint io_netty_unix_filedescriptor_readAddress(JNIEnv* env, jclass clazz, jint fd, jlong address, jint pos, jint limit) {
-    return netty_unix_filedescriptor_readAddress(env, clazz, fd, address, pos, limit);
+JNIEXPORT jint io_netty_unix_filedescriptor_write(JNIEnv* env, jclass clazz, jint fd, jobject jbuffer, jint pos, jint limit) {
+    return netty_unix_filedescriptor_write(env, clazz, fd, jbuffer, pos, limit);
 }
 
 JNIEXPORT jint io_netty_unix_filedescriptor_writeAddress(JNIEnv* env, jclass clazz, jint fd, jlong address, jint pos, jint limit) {
     return netty_unix_filedescriptor_writeAddress(env, clazz, fd, address, pos, limit);
 }
 
+JNIEXPORT jlong io_netty_unix_filedescriptor_writev(JNIEnv* env, jclass clazz, jint fd, jobjectArray buffers, const jint offset, jint length, jlong maxBytesToWrite) {
+    return netty_unix_filedescriptor_writev(env, clazz, fd, buffers, offset, length, maxBytesToWrite);
+}
+
 JNIEXPORT jlong io_netty_unix_filedescriptor_writevAddresses(JNIEnv* env, jclass clazz, jint fd, jlong memoryAddress, jint length) {
     return netty_unix_filedescriptor_writevAddresses(env, clazz, fd, memoryAddress, length);
+}
+
+JNIEXPORT jint io_netty_unix_filedescriptor_read(JNIEnv* env, jclass clazz, jint fd, jobject jbuffer, jint pos, jint limit) {
+    return netty_unix_filedescriptor_read(env, clazz, fd, jbuffer, pos, limit);
+}
+
+JNIEXPORT jint io_netty_unix_filedescriptor_readAddress(JNIEnv* env, jclass clazz, jint fd, jlong address, jint pos, jint limit) {
+    return netty_unix_filedescriptor_readAddress(env, clazz, fd, address, pos, limit);
+}
+
+JNIEXPORT jlong io_netty_unix_filedescriptor_newPipe(JNIEnv* env, jclass clazz) {
+    return netty_unix_filedescriptor_newPipe(env, clazz);
 }

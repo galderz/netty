@@ -50,3 +50,11 @@ jint netty_unix_buffer_JNI_OnLoad(JNIEnv* env, const char* packagePrefix) {
 }
 
 void netty_unix_buffer_JNI_OnUnLoad(JNIEnv* env) { }
+
+JNIEXPORT jlong io_netty_unix_buffer_memoryAddress0(JNIEnv* env, jclass clazz, jobject buffer) {
+    return netty_unix_buffer_memoryAddress0(env, clazz, buffer);
+}
+
+JNIEXPORT jint io_netty_unix_buffer_addressSize0(JNIEnv* env, jclass clazz) {
+   return netty_unix_buffer_addressSize0(env, clazz);
+}

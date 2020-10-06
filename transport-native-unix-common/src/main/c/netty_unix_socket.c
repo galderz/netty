@@ -1104,66 +1104,174 @@ void netty_unix_socket_JNI_OnUnLoad(JNIEnv* env) {
     NETTY_UNLOAD_CLASS(env, inetSocketAddressClass);
 }
 
-JNIEXPORT void io_netty_unix_socket_initialize(JNIEnv* env, jclass clazz, jboolean ipv4Preferred) {
-    return netty_unix_socket_initialize(env, clazz, ipv4Preferred);
-}
-
 JNIEXPORT jboolean io_netty_unix_socket_isIPv6Preferred(JNIEnv* env, jclass clazz) {
     return netty_unix_socket_isIPv6Preferred(env, clazz);
-}
-
-JNIEXPORT jint io_netty_unix_socket_newSocketStreamFd(JNIEnv* env, jclass clazz, jboolean ipv6) {
-    return netty_unix_socket_newSocketStreamFd(env, clazz, ipv6);
 }
 
 JNIEXPORT jboolean io_netty_unix_socket_isIPv6(JNIEnv* env, jclass clazz, jint fd) {
     return netty_unix_socket_isIPv6(env, clazz, fd);
 }
 
-JNIEXPORT void io_netty_unix_socket_setReuseAddress(JNIEnv* env, jclass clazz, jint fd, jint optval) {
-    netty_unix_socket_setReuseAddress(env, clazz, fd, optval);
-}
-
-JNIEXPORT jint io_netty_unix_socket_bind(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6, jbyteArray address, jint scopeId, jint port) {
-    return netty_unix_socket_bind(env, clazz, fd, ipv6, address, scopeId, port);
-}
-
-JNIEXPORT jbyteArray io_netty_unix_socket_localAddress(JNIEnv* env, jclass clazz, jint fd) {
-    return netty_unix_socket_localAddress(env, clazz, fd);
-}
-
-JNIEXPORT jint io_netty_unix_socket_listen(JNIEnv* env, jclass clazz, jint fd, jint backlog) {
-    return netty_unix_socket_listen(env, clazz, fd, backlog);
-}
-
-JNIEXPORT void io_netty_unix_socket_setTcpNoDelay(JNIEnv* env, jclass clazz, jint fd, jint optval) {
-    netty_unix_socket_setTcpNoDelay(env, clazz, fd, optval);
-}
-
-JNIEXPORT jint io_netty_unix_socket_getSendBufferSize(JNIEnv* env, jclass clazz, jint fd) {
-    return netty_unix_socket_getSendBufferSize(env, clazz, fd);
+JNIEXPORT jint io_netty_unix_socket_shutdown(JNIEnv* env, jclass clazz, jint fd, jboolean read, jboolean write) {
+    return netty_unix_socket_shutdown(env, clazz, fd, read, write);
 }
 
 JNIEXPORT jint io_netty_unix_socket_connect(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6, jbyteArray address, jint scopeId, jint port) {
     return netty_unix_socket_connect(env, clazz, fd, ipv6, address, scopeId, port);
 }
 
-JNIEXPORT jint io_netty_unix_socket_accept(JNIEnv* env, jclass clazz, jint fd, jbyteArray acceptedAddress) {
-    return netty_unix_socket_accept(env, clazz, fd, acceptedAddress);
+JNIEXPORT jint io_netty_unix_socket_connectDomainSocket(JNIEnv* env, jclass clazz, jint fd, jbyteArray socketPath) {
+    return netty_unix_socket_connectDomainSocket(env, clazz, fd, socketPath);
 }
 
 JNIEXPORT jint io_netty_unix_socket_finishConnect(JNIEnv* env, jclass clazz, jint fd) {
     return netty_unix_socket_finishConnect(env, clazz, fd);
 }
 
+JNIEXPORT jint io_netty_unix_socket_disconnect(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6) {
+    return netty_unix_socket_disconnect(env, clazz, fd, ipv6);
+}
+
+JNIEXPORT jint io_netty_unix_socket_bind(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6, jbyteArray address, jint scopeId, jint port) {
+    return netty_unix_socket_bind(env, clazz, fd, ipv6, address, scopeId, port);
+}
+
+JNIEXPORT jint io_netty_unix_socket_bindDomainSocket(JNIEnv* env, jclass clazz, jint fd, jbyteArray socketPath) {
+    return netty_unix_socket_bindDomainSocket(env, clazz, fd, socketPath);
+}
+
+JNIEXPORT jint io_netty_unix_socket_listen(JNIEnv* env, jclass clazz, jint fd, jint backlog) {
+    return netty_unix_socket_listen(env, clazz, fd, backlog);
+}
+
+JNIEXPORT jint io_netty_unix_socket_accept(JNIEnv* env, jclass clazz, jint fd, jbyteArray acceptedAddress) {
+    return netty_unix_socket_accept(env, clazz, fd, acceptedAddress);
+}
+
 JNIEXPORT jbyteArray io_netty_unix_socket_remoteAddress(JNIEnv* env, jclass clazz, jint fd) {
     return netty_unix_socket_remoteAddress(env, clazz, fd);
+}
+
+JNIEXPORT jbyteArray io_netty_unix_socket_localAddress(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_unix_socket_localAddress(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_unix_socket_sendTo(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6, jobject jbuffer, jint pos, jint limit, jbyteArray address, jint scopeId, jint port) {
+    return netty_unix_socket_sendTo(env, clazz, fd, ipv6, jbuffer, pos, limit, address, scopeId, port);
+}
+
+JNIEXPORT jint io_netty_unix_socket_sendToAddress(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6, jlong memoryAddress, jint pos, jint limit, jbyteArray address, jint scopeId, jint port) {
+    return netty_unix_socket_sendToAddress(env, clazz, fd, ipv6, memoryAddress, pos, limit, address, scopeId, port);
+}
+
+JNIEXPORT jint io_netty_unix_socket_sendToAddresses(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6, jlong memoryAddress, jint length, jbyteArray address, jint scopeId, jint port) {
+    return netty_unix_socket_sendToAddresses(env, clazz, fd, ipv6, memoryAddress, length, address, scopeId, port);
+}
+
+JNIEXPORT jobject io_netty_unix_socket_recvFrom(JNIEnv* env, jclass clazz, jint fd, jobject jbuffer, jint pos, jint limit) {
+    return netty_unix_socket_recvFrom(env, clazz, fd, jbuffer, pos, limit);
+}
+
+JNIEXPORT jobject io_netty_unix_socket_recvFromAddress(JNIEnv* env, jclass clazz, jint fd, jlong address, jint pos, jint limit) {
+    return netty_unix_socket_recvFromAddress(env, clazz, fd, address, pos, limit);
+}
+
+JNIEXPORT jint io_netty_unix_socket_recvFd(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_unix_socket_recvFd(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_unix_socket_sendFd(JNIEnv* env, jclass clazz, jint socketFd, jint fd) {
+    return netty_unix_socket_sendFd(env, clazz, socketFd, fd);
+}
+
+JNIEXPORT jint io_netty_unix_socket_newSocketStreamFd(JNIEnv* env, jclass clazz, jboolean ipv6) {
+    return netty_unix_socket_newSocketStreamFd(env, clazz, ipv6);
+}
+
+JNIEXPORT jint io_netty_unix_socket_newSocketDgramFd(JNIEnv* env, jclass clazz, jboolean ipv6) {
+    return netty_unix_socket_newSocketDgramFd(env, clazz, ipv6);
+}
+
+JNIEXPORT jint io_netty_unix_socket_newSocketDomainFd(JNIEnv* env, jclass clazz) {
+    return netty_unix_socket_newSocketDomainFd(env, clazz);
+}
+
+JNIEXPORT jint io_netty_unix_socket_isReuseAddress(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_unix_socket_isReuseAddress(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_unix_socket_isReusePort(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_unix_socket_isReusePort(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_unix_socket_getReceiveBufferSize(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_unix_socket_getReceiveBufferSize(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_unix_socket_getSendBufferSize(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_unix_socket_getSendBufferSize(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_unix_socket_isKeepAlive(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_unix_socket_isKeepAlive(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_unix_socket_isTcpNoDelay(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_unix_socket_isTcpNoDelay(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_unix_socket_isBroadcast(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_unix_socket_isBroadcast(env, clazz, fd);
 }
 
 JNIEXPORT jint io_netty_unix_socket_getSoLinger(JNIEnv* env, jclass clazz, jint fd) {
     return netty_unix_socket_getSoLinger(env, clazz, fd);
 }
 
-JNIEXPORT jint io_netty_unix_socket_shutdown(JNIEnv* env, jclass clazz, jint fd, jboolean read, jboolean write) {
-    return netty_unix_socket_shutdown(env, clazz, fd, read, write);
+JNIEXPORT jint io_netty_unix_socket_getSoError(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_unix_socket_getSoError(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_unix_socket_getTrafficClass(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6) {
+    return netty_unix_socket_getTrafficClass(env, clazz, fd, ipv6);
+}
+
+JNIEXPORT void io_netty_unix_socket_setReuseAddress(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_unix_socket_setReuseAddress(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_unix_socket_setReusePort(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_unix_socket_setReusePort(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_unix_socket_setKeepAlive(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_unix_socket_setKeepAlive(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_unix_socket_setReceiveBufferSize(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_unix_socket_setReceiveBufferSize(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_unix_socket_setSendBufferSize(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_unix_socket_setSendBufferSize(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_unix_socket_setTcpNoDelay(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_unix_socket_setTcpNoDelay(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_unix_socket_setSoLinger(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_unix_socket_setSoLinger(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_unix_socket_setBroadcast(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_unix_socket_setBroadcast(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_unix_socket_setTrafficClass(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6, jint optval) {
+    netty_unix_socket_setTrafficClass(env, clazz, fd, ipv6, optval);
+}
+
+JNIEXPORT void io_netty_unix_socket_initialize(JNIEnv* env, jclass clazz, jboolean ipv4Preferred) {
+    netty_unix_socket_initialize(env, clazz, ipv4Preferred);
 }
