@@ -791,3 +791,167 @@ done:
 void netty_epoll_linuxsocket_JNI_OnUnLoad(JNIEnv* env) {
     NETTY_UNLOAD_CLASS(env, peerCredentialsClass);
 }
+
+JNIEXPORT void io_netty_epoll_linuxsocket_joinGroup(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6, jbyteArray groupAddress, jbyteArray interfaceAddress, jint scopeId, jint interfaceIndex) {
+    netty_epoll_linuxsocket_joinGroup(env, clazz, fd, ipv6, groupAddress, interfaceAddress, scopeId, interfaceIndex);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_joinSsmGroup(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6, jbyteArray groupAddress, jbyteArray interfaceAddress, jint scopeId, jint interfaceIndex, jbyteArray sourceAddress) {
+    netty_epoll_linuxsocket_joinSsmGroup(env, clazz, fd, ipv6, groupAddress, interfaceAddress, scopeId, interfaceIndex, sourceAddress);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_leaveGroup(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6, jbyteArray groupAddress, jbyteArray interfaceAddress, jint scopeId, jint interfaceIndex) {
+    netty_epoll_linuxsocket_leaveGroup(env, clazz, fd, ipv6, groupAddress, interfaceAddress, scopeId, interfaceIndex);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_leaveSsmGroup(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6, jbyteArray groupAddress, jbyteArray interfaceAddress, jint scopeId, jint interfaceIndex, jbyteArray sourceAddress) {
+    netty_epoll_linuxsocket_leaveSsmGroup(env, clazz, fd, ipv6, groupAddress, interfaceAddress, scopeId, interfaceIndex, sourceAddress);
+}
+
+JNIEXPORT jlong io_netty_epoll_linuxsocket_sendFile(JNIEnv* env, jclass clazz, jint fd, jobject fileRegion, jlong base_off, jlong off, jlong len) {
+    return netty_epoll_linuxsocket_sendFile(env, clazz, fd, fileRegion, base_off, off, len);
+}
+
+JNIEXPORT jint io_netty_epoll_linuxsocket_getTcpDeferAccept(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_epoll_linuxsocket_getTcpDeferAccept(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_epoll_linuxsocket_isTcpQuickAck(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_epoll_linuxsocket_isTcpQuickAck(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_epoll_linuxsocket_isTcpCork(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_epoll_linuxsocket_isTcpCork(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_epoll_linuxsocket_getSoBusyPoll(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_epoll_linuxsocket_getSoBusyPoll(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_epoll_linuxsocket_getTcpNotSentLowAt(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_epoll_linuxsocket_getTcpNotSentLowAt(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_epoll_linuxsocket_getTcpKeepIdle(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_epoll_linuxsocket_getTcpKeepIdle(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_epoll_linuxsocket_getTcpKeepIntvl(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_epoll_linuxsocket_getTcpKeepIntvl(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_epoll_linuxsocket_getTcpKeepCnt(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_epoll_linuxsocket_getTcpKeepCnt(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_epoll_linuxsocket_getTcpUserTimeout(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_epoll_linuxsocket_getTcpUserTimeout(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_epoll_linuxsocket_getTimeToLive(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_epoll_linuxsocket_getTimeToLive(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_epoll_linuxsocket_isIpFreeBind(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_epoll_linuxsocket_isIpFreeBind(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_epoll_linuxsocket_isIpTransparent(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_epoll_linuxsocket_isIpTransparent(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_epoll_linuxsocket_isIpRecvOrigDestAddr(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_epoll_linuxsocket_isIpRecvOrigDestAddr(env, clazz, fd);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_getTcpInfo(JNIEnv* env, jclass clazz, jint fd, jlongArray array) {
+    netty_epoll_linuxsocket_getTcpInfo(env, clazz, fd, array);
+}
+
+JNIEXPORT jobject io_netty_epoll_linuxsocket_getPeerCredentials(JNIEnv *env, jclass clazz, jint fd) {
+    return netty_epoll_linuxsocket_getPeerCredentials(env, clazz, fd);
+}
+
+JNIEXPORT jint io_netty_epoll_linuxsocket_isTcpFastOpenConnect(JNIEnv* env, jclass clazz, jint fd) {
+    return netty_epoll_linuxsocket_isTcpFastOpenConnect(env, clazz, fd);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_setTcpDeferAccept(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_epoll_linuxsocket_setTcpDeferAccept(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_setTcpQuickAck(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_epoll_linuxsocket_setTcpQuickAck(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_setTcpCork(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_epoll_linuxsocket_setTcpCork(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_setSoBusyPoll(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_epoll_linuxsocket_setSoBusyPoll(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_setTcpNotSentLowAt(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_epoll_linuxsocket_setTcpNotSentLowAt(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_setTcpFastOpen(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_epoll_linuxsocket_setTcpFastOpen(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_setTcpFastOpenConnect(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_epoll_linuxsocket_setTcpFastOpenConnect(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_setTcpKeepIdle(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_epoll_linuxsocket_setTcpKeepIdle(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_setTcpKeepIntvl(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_epoll_linuxsocket_setTcpKeepIntvl(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_setTcpKeepCnt(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_epoll_linuxsocket_setTcpKeepCnt(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_setTcpUserTimeout(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_epoll_linuxsocket_setTcpUserTimeout(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_setIpFreeBind(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_epoll_linuxsocket_setIpFreeBind(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_setIpTransparent(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_epoll_linuxsocket_setIpTransparent(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_setIpRecvOrigDestAddr(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_epoll_linuxsocket_setIpRecvOrigDestAddr(env, clazz, fd, optval);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_setTcpMd5Sig(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6, jbyteArray address, jint scopeId, jbyteArray key) {
+    netty_epoll_linuxsocket_setTcpMd5Sig(env, clazz, fd, ipv6, address, scopeId, key);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_setInterface(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6, jbyteArray interfaceAddress, jint scopeId, jint interfaceIndex) {
+    netty_epoll_linuxsocket_setInterface(env, clazz, fd, ipv6, interfaceAddress, scopeId, interfaceIndex);
+}
+
+JNIEXPORT int io_netty_epoll_linuxsocket_getInterface(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6) {
+    return netty_epoll_linuxsocket_getInterface(env, clazz, fd, ipv6);
+}
+
+JNIEXPORT jint io_netty_epoll_linuxsocket_getIpMulticastLoop(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6) {
+    return netty_epoll_linuxsocket_getIpMulticastLoop(env, clazz, fd, ipv6);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_setIpMulticastLoop(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6, jint optval) {
+    netty_epoll_linuxsocket_setIpMulticastLoop(env, clazz, fd, ipv6, optval);
+}
+
+JNIEXPORT void io_netty_epoll_linuxsocket_setTimeToLive(JNIEnv* env, jclass clazz, jint fd, jint optval) {
+    netty_epoll_linuxsocket_setTimeToLive(env, clazz, fd, optval);
+}
