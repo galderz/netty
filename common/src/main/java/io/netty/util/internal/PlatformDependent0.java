@@ -625,7 +625,8 @@ final class PlatformDependent0 {
     }
 
     static boolean isNativeImage() {
-        return RUNNING_IN_NATIVE_IMAGE;
+        final boolean useNewCode = Boolean.getBoolean("netty.use-new-code");
+        return useNewCode ? false : RUNNING_IN_NATIVE_IMAGE;
     }
 
     static boolean isExplicitNoUnsafe() {
