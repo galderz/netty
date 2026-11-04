@@ -137,7 +137,6 @@ public final class PlatformDependent {
             SystemPropertyUtil.getBoolean("io.netty.ignoreExpensiveClean", false);
 
     private static final boolean JFR;
-    private static final boolean VAR_HANDLE;
 
     private static final Cleaner NOOP = new Cleaner() {
         @Override
@@ -284,37 +283,13 @@ public final class PlatformDependent {
         } else if (logger.isDebugEnabled()) {
             logger.debug("-Dio.netty.jfr.enabled: {}", JFR);
         }
-        VAR_HANDLE = initializeVarHandle();
+        logVarHandleStatus();
     }
 
-    private static boolean initializeVarHandle() {
-        if (isUnaligned() || javaVersion() < 9 ||
-                PlatformDependent0.isNativeImage()) {
-            return false;
-        }
-        boolean varHandleAvailable = false;
-        Throwable varHandleFailure;
-        try {
-            VarHandle.storeStoreFence();
-            varHandleAvailable = VarHandleFactory.isSupported();
-            varHandleFailure = VarHandleFactory.unavailableCause();
-        } catch (Throwable t) {
-            // no-op
-            varHandleFailure = t;
-        }
-        if (varHandleFailure != null) {
-            logger.debug("java.lang.invoke.VarHandle: unavailable, reason: {}", varHandleFailure.toString());
-        } else {
-            logger.debug("java.lang.invoke.VarHandle: available");
-        }
-        boolean varHandleEnabled = varHandleAvailable &&
-                SystemPropertyUtil.getBoolean("io.netty.varHandle.enabled", varHandleAvailable);
-        if (logger.isTraceEnabled() && varHandleFailure != null) {
-            logger.debug("-Dio.netty.varHandle.enabled: {}", varHandleEnabled, varHandleFailure);
-        } else if (logger.isDebugEnabled()) {
-            logger.debug("-Dio.netty.varHandle.enabled: {}", varHandleEnabled);
-        }
-        return varHandleEnabled;
+    private static void logVarHandleStatus() {
+        boolean varHandle = VarHandleSupport.VAR_HANDLE;
+        logger.debug("java.lang.invoke.VarHandle: {}", varHandle ? "available" : "unavailable");
+        logger.debug("-Dio.netty.varHandle.enabled: {}", varHandle);
     }
 
     // For specifications, see https://www.freedesktop.org/software/systemd/man/os-release.html
@@ -691,7 +666,7 @@ public final class PlatformDependent {
     }
 
     public static boolean hasVarHandle() {
-        return VAR_HANDLE;
+        return VarHandleSupport.VAR_HANDLE;
     }
 
     static boolean hasJctoolsVarHandle() {
@@ -707,7 +682,7 @@ public final class PlatformDependent {
      * 3) Otherwise, fall back to manual byte-by-byte access.
      */
     public static boolean useVarHandleForMultiByteAccess() {
-        return !isUnaligned() && VAR_HANDLE;
+        return !isUnaligned() && VarHandleSupport.VAR_HANDLE;
     }
 
     /**
@@ -715,95 +690,95 @@ public final class PlatformDependent {
      * or via {@code VarHandle} where the JVM handles alignment and byte ordering internally.
      */
     public static boolean canUnalignedAccess() {
-        return isUnaligned() || VAR_HANDLE;
+        return isUnaligned() || VarHandleSupport.VAR_HANDLE;
     }
 
     public static VarHandle findVarHandleOfIntField(MethodHandles.Lookup lookup, Class<?> type, String fieldName) {
-        if (VAR_HANDLE) {
+        if (VarHandleSupport.VAR_HANDLE) {
             return VarHandleFactory.privateFindVarHandle(lookup, type, fieldName, int.class);
         }
         return null;
     }
 
     public static VarHandle intBeArrayView() {
-        if (VAR_HANDLE) {
+        if (VarHandleSupport.VAR_HANDLE) {
             return VarHandleFactory.intBeArrayView();
         }
         return null;
     }
 
     public static VarHandle intLeArrayView() {
-        if (VAR_HANDLE) {
+        if (VarHandleSupport.VAR_HANDLE) {
             return VarHandleFactory.intLeArrayView();
         }
         return null;
     }
 
     public static VarHandle longBeArrayView() {
-        if (VAR_HANDLE) {
+        if (VarHandleSupport.VAR_HANDLE) {
             return VarHandleFactory.longBeArrayView();
         }
         return null;
     }
 
     public static VarHandle longLeArrayView() {
-        if (VAR_HANDLE) {
+        if (VarHandleSupport.VAR_HANDLE) {
             return VarHandleFactory.longLeArrayView();
         }
         return null;
     }
 
     public static VarHandle shortBeArrayView() {
-        if (VAR_HANDLE) {
+        if (VarHandleSupport.VAR_HANDLE) {
             return VarHandleFactory.shortBeArrayView();
         }
         return null;
     }
 
     public static VarHandle shortLeArrayView() {
-        if (VAR_HANDLE) {
+        if (VarHandleSupport.VAR_HANDLE) {
             return VarHandleFactory.shortLeArrayView();
         }
         return null;
     }
 
     public static VarHandle longBeByteBufferView() {
-        if (VAR_HANDLE) {
+        if (VarHandleSupport.VAR_HANDLE) {
             return VarHandleFactory.longBeByteBufferView();
         }
         return null;
     }
 
     public static VarHandle longLeByteBufferView() {
-        if (VAR_HANDLE) {
+        if (VarHandleSupport.VAR_HANDLE) {
             return VarHandleFactory.longLeByteBufferView();
         }
         return null;
     }
 
     public static VarHandle intBeByteBufferView() {
-        if (VAR_HANDLE) {
+        if (VarHandleSupport.VAR_HANDLE) {
             return VarHandleFactory.intBeByteBufferView();
         }
         return null;
     }
 
     public static VarHandle intLeByteBufferView() {
-        if (VAR_HANDLE) {
+        if (VarHandleSupport.VAR_HANDLE) {
             return VarHandleFactory.intLeByteBufferView();
         }
         return null;
     }
 
     public static VarHandle shortBeByteBufferView() {
-        if (VAR_HANDLE) {
+        if (VarHandleSupport.VAR_HANDLE) {
             return VarHandleFactory.shortBeByteBufferView();
         }
         return null;
     }
 
     public static VarHandle shortLeByteBufferView() {
-        if (VAR_HANDLE) {
+        if (VarHandleSupport.VAR_HANDLE) {
             return VarHandleFactory.shortLeByteBufferView();
         }
         return null;
