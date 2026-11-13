@@ -24,14 +24,12 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.SplittableRandom;
-import java.util.concurrent.atomic.AtomicLong;
 
 import static java.lang.invoke.MethodType.methodType;
 
@@ -56,15 +54,10 @@ final class PlatformDependent0 {
     private static final MethodHandle MEMORY_SEGMENT_ADDRESS_OF_BUFFER;
     private static final MethodHandle SPLITTABLE_RANDOM_NEXT_BYTES;
     private static final boolean IS_ANDROID = isAndroid0();
-    private static final int JAVA_VERSION = javaVersion0();
+    private static final int JAVA_VERSION = PlatformCheck.JAVA_VERSION;
     private static final Throwable EXPLICIT_NO_UNSAFE_CAUSE = explicitNoUnsafeCause0();
 
     private static final Throwable UNSAFE_UNAVAILABILITY_CAUSE;
-
-    // See https://github.com/oracle/graal/blob/master/sdk/src/org.graalvm.nativeimage/src/org/graalvm/nativeimage/
-    // ImageInfo.java
-    private static final boolean RUNNING_IN_NATIVE_IMAGE = SystemPropertyUtil.contains(
-            "org.graalvm.nativeimage.imagecode");
 
     private static final boolean IS_EXPLICIT_TRY_REFLECTION_SET_ACCESSIBLE = explicitTryReflectionSetAccessible0();
 
@@ -338,83 +331,14 @@ final class PlatformDependent0 {
             INT_ARRAY_INDEX_SCALE = UNSAFE.arrayIndexScale(int[].class);
             LONG_ARRAY_BASE_OFFSET = UNSAFE.arrayBaseOffset(long[].class);
             LONG_ARRAY_INDEX_SCALE = UNSAFE.arrayIndexScale(long[].class);
-            final boolean unaligned;
-            String unalignedProperty = SystemPropertyUtil.get("io.netty.unalignedAccess", "").trim();
 
-            // using a known type to avoid loading new classes
-            final AtomicLong maybeMaxMemory = new AtomicLong(-1);
-            Object maybeUnaligned = AccessController.doPrivileged(new PrivilegedAction<Object>() {
-                @Override
-                public Object run() {
-                    if ("true".equalsIgnoreCase(unalignedProperty)) {
-                        return Boolean.TRUE;
-                    }
-                    if ("false".equalsIgnoreCase(unalignedProperty)) {
-                        return Boolean.FALSE;
-                    }
-                    try {
-                        Class<?> bitsClass =
-                                Class.forName("java.nio.Bits", false, getSystemClassLoader());
-                        int version = javaVersion();
-                        if (version >= 9) {
-                            // Java9/10 use all lowercase and later versions all uppercase.
-                            String fieldName = version >= 11? "MAX_MEMORY" : "maxMemory";
-                            // On Java9 and later we try to directly access the field as we can do this without
-                            // adjust the accessible levels.
-                            try {
-                                Field maxMemoryField = bitsClass.getDeclaredField(fieldName);
-                                if (maxMemoryField.getType() == long.class) {
-                                    long offset = UNSAFE.staticFieldOffset(maxMemoryField);
-                                    Object object = UNSAFE.staticFieldBase(maxMemoryField);
-                                    maybeMaxMemory.lazySet(UNSAFE.getLong(object, offset));
-                                }
-                            } catch (Throwable ignore) {
-                                // ignore if can't access
-                            }
-                            fieldName = version >= 11? "UNALIGNED" : "unaligned";
-                            try {
-                                Field unalignedField = bitsClass.getDeclaredField(fieldName);
-                                if (unalignedField.getType() == boolean.class) {
-                                    long offset = UNSAFE.staticFieldOffset(unalignedField);
-                                    Object object = UNSAFE.staticFieldBase(unalignedField);
-                                    return UNSAFE.getBoolean(object, offset);
-                                }
-                                // There is something unexpected stored in the field,
-                                // let us fall-back and try to use a reflective method call as last resort.
-                            } catch (NoSuchFieldException ignore) {
-                                // We did not find the field we expected, move on.
-                            }
-                        }
-                        Method unalignedMethod = bitsClass.getDeclaredMethod("unaligned");
-                        Throwable cause = ReflectionUtil.trySetAccessible(unalignedMethod, true);
-                        if (cause != null) {
-                            return cause;
-                        }
-                        return unalignedMethod.invoke(null);
-                    } catch (NoSuchMethodException | SecurityException | IllegalAccessException |
-                             InvocationTargetException | ClassNotFoundException e) {
-                        return e;
-                    }
-                }
-            });
+            // Detect unaligned access via PlatformCheck (shared with VarHandleSupport).
+            // Pass UNSAFE so the field can be read without accessibility checks.
+            UNALIGNED = PlatformCheck.detectUnaligned(UNSAFE);
+            logger.debug("java.nio.Bits.unaligned: {}", UNALIGNED);
 
-            if (maybeUnaligned instanceof Boolean) {
-                unaligned = (Boolean) maybeUnaligned;
-                logger.debug("java.nio.Bits.unaligned: available, {}", unaligned);
-            } else {
-                String arch = SystemPropertyUtil.get("os.arch", "");
-                //noinspection DynamicRegexReplaceableByCompiledPattern
-                unaligned = arch.matches("^(i[3-6]86|x86(_64)?|x64|amd64)$");
-                Throwable t = (Throwable) maybeUnaligned;
-                if (logger.isTraceEnabled()) {
-                    logger.debug("java.nio.Bits.unaligned: unavailable, {}", unaligned, t);
-                } else {
-                    logger.debug("java.nio.Bits.unaligned: unavailable, {}, {}", unaligned, t.getMessage());
-                }
-            }
-
-            UNALIGNED = unaligned;
-            BITS_MAX_DIRECT_MEMORY = maybeMaxMemory.get() >= 0? maybeMaxMemory.get() : -1;
+            // Read Bits.MAX_MEMORY using Unsafe.
+            BITS_MAX_DIRECT_MEMORY = readBitsMaxDirectMemory(UNSAFE);
 
             if (javaVersion() >= 9) {
                 Object maybeException = AccessController.doPrivileged(new PrivilegedAction<Object>() {
@@ -625,7 +549,7 @@ final class PlatformDependent0 {
     }
 
     static boolean isNativeImage() {
-        return RUNNING_IN_NATIVE_IMAGE;
+        return PlatformCheck.isNativeImage();
     }
 
     static boolean isExplicitNoUnsafe() {
@@ -1228,7 +1152,7 @@ final class PlatformDependent0 {
     private static boolean explicitTryReflectionSetAccessible0() {
         // we disable reflective access
         return SystemPropertyUtil.getBoolean("io.netty.tryReflectionSetAccessible",
-                javaVersion() < 9 || RUNNING_IN_NATIVE_IMAGE);
+                javaVersion() < 9 || PlatformCheck.isNativeImage());
     }
 
     static boolean isExplicitTryReflectionSetAccessible() {
@@ -1239,39 +1163,39 @@ final class PlatformDependent0 {
         return JAVA_VERSION;
     }
 
-    private static int javaVersion0() {
-        final int majorVersion;
-
-        if (isAndroid()) {
-            majorVersion = 6;
-        } else {
-            majorVersion = majorVersionFromJavaSpecificationVersion();
-        }
-
-        logger.debug("Java version: {}", majorVersion);
-
-        return majorVersion;
-    }
-
-    // Package-private for testing only
+    // Package-private for testing only — delegates to PlatformCheck.
     static int majorVersionFromJavaSpecificationVersion() {
-        return majorVersion(SystemPropertyUtil.get("java.specification.version", "1.6"));
+        return PlatformCheck.JAVA_VERSION;
     }
 
-    // Package-private for testing only
+    // Package-private for testing only — delegates to PlatformCheck.
     static int majorVersion(final String javaSpecVersion) {
-        final String[] components = javaSpecVersion.split("\\.");
-        final int[] version = new int[components.length];
-        for (int i = 0; i < components.length; i++) {
-            version[i] = Integer.parseInt(components[i]);
-        }
+        return PlatformCheck.majorVersion(javaSpecVersion);
+    }
 
-        if (version[0] == 1) {
-            assert version[1] >= 6;
-            return version[1];
-        } else {
-            return version[0];
+    /**
+     * Read {@code java.nio.Bits.MAX_MEMORY} using Unsafe.
+     */
+    private static long readBitsMaxDirectMemory(Unsafe unsafe) {
+        try {
+            Class<?> bitsClass = Class.forName("java.nio.Bits", false, getSystemClassLoader());
+            int version = javaVersion();
+            if (version >= 9) {
+                String fieldName = version >= 11 ? "MAX_MEMORY" : "maxMemory";
+                Field field = bitsClass.getDeclaredField(fieldName);
+                if (field.getType() == long.class) {
+                    long offset = unsafe.staticFieldOffset(field);
+                    Object base = unsafe.staticFieldBase(field);
+                    long value = unsafe.getLong(base, offset);
+                    if (value >= 0) {
+                        return value;
+                    }
+                }
+            }
+        } catch (Throwable ignore) {
+            // ignore
         }
+        return -1;
     }
 
     private PlatformDependent0() {
